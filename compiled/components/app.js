@@ -125,6 +125,11 @@ var App = React.createClass({
       "div",
       { id: "appWindow" },
       React.createElement(
+        "h3",
+        null,
+        "Shift-press to loop. Ctrl-Press to rebind"
+      ),
+      React.createElement(
         "div",
         { id: "bindingWindow" },
         React.createElement(

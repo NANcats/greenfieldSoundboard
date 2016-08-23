@@ -121,6 +121,7 @@ var App = React.createClass({
   render: function() {
    return (
      <div id="appWindow">
+      <h3>Shift-press to loop. Ctrl-Press to rebind</h3>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
