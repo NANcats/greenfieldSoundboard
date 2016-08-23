@@ -1,68 +1,3 @@
-//input syntax:  {
-//  targetKeyCode1: "/path/to/source/file.wav",
-//  targetKeyCode2: "/path/to/next/source.wav"
-//  ...
-//}
-var testData = {
-  97: "/soundfiles/deep-techno-groove.wav",
-  98: "/soundfiles/bam-bam-bolam.wav",
-  99: "/soundfiles/nyan-cat.wav",
-  100: "/soundfiles/day.wav",
-  101: "/soundfiles/beads.wav",
-  102: "/soundfiles/drums.wav",
-  103: "/soundfiles/pew-pew.wav",
-  104: "/soundfiles/grendel.wav",
-  105: "/soundfiles/derp-yell.wav",
-  106: "/soundfiles/beltbuckle.wav",
-  107: "/soundfiles/oh-yeah.wav",
-  108: "/soundfiles/power-up.wav",
-  109: "/soundfiles/straight-techno-beat.wav",
-  110: "/soundfiles/kamehameha.wav",
-  111: "/soundfiles/fart.wav",
-  112: "/soundfiles/heavy-rain.wav",
-  113: "/soundfiles/jet-whoosh.wav",
-  114: "/soundfiles/mystery-chime.ogg",
-  115: "/soundfiles/space-bloop.wav",
-  116: "/soundfiles/techno-drums2.wav",
-  117: "/soundfiles/whale.wav",
-  118: "/soundfiles/vegeta-big-bang.wav",
-  119: "/soundfiles/piano-mood.wav",
-  120: "/soundfiles/boing-a.wav",
-  121: "/soundfiles/techno-drums.wav",
-  122: "/soundfiles/guitar-chord.wav"
-};
-
-var qwertyMap = [
- 113,
- 119,
- 101,
- 114,
- 116,
- 121,
- 117,
- 105,
- 111,
- 112,
- 0,
- 97,
- 115,
- 100,
- 102,
- 103,
- 104,
- 106,
- 107,
- 108,
- 0,
- 122,
- 120,
- 99,
- 118,
- 98,
- 110,
- 109
-];
-
 //sample input:
 //This example would bind the 'a' key to the "example.wav" file.
 //{
@@ -71,63 +6,6 @@ var qwertyMap = [
 
 //For a comprehensive list of keycode bindings, see "keycode.js"
 //in this same directory.
-
-//VKey React class.  Represents one key on our virtual keyboard.
-var VKey = React.createClass ({
-  //method for removing styling from key after its audio element has stopped playing.
-  handleAudioEnd: function (event) {
-    var $vKey = $('#' + this.props.keyId).parent();
-
-    $vKey.removeClass('green red pressed');
-    event.preventDefault();
-    this.render();
-  },
-
-  render: function() {
-    return (
-      <div className="key">
-        <p className="keyLabel">{keyCodes[this.props.keyId]}</p>
-        <p className="filename">{ this.props.path.substr(12).slice(0, -4).split("-").join(" ")}</p>
-        <audio id={this.props.keyId} src={ this.props.path } onEnded={ this.handleAudioEnd } preload="auto"></audio>
-      </div>  //
-    )
-  }
-});
-
-//RebindNode React class.  Represents one entry in the drop-down list for rebinding keys.
-var RebindNode = React.createClass({
-  //this is the function that actually changes the binding of the key.
-  updateKeyBinding: function(event) {
-    var code = this.props.targetKey.charCodeAt();
-    var path = "/soundfiles/" + this.props.targetSong;
-
-    this.props.bindings.forEach(function (ele, idx) {
-      if (ele.key === code) {
-        this.props.bindings[idx].path = path;
-      }
-    }, this);
-  },
-  //method for previewing sound before binding it.
-  playSample: function() {
-    var soundExample = window.location.href + "soundFiles/" + this.props.targetSong;
-    var $soundNode = document.getElementById('secretSound');
-
-    $soundNode.pause();
-    $soundNode.src = soundExample;
-    $soundNode.currentTime = 0;
-    $soundNode.play();
-  },
-  render: function() {
-    return (
-      <div className="rebindNode" onClick = {this.updateKeyBinding}>
-        <p className="rebindSong" onClick = {this.props.reRender}> {this.props.targetSong.slice(0, -4).split("-").join(" ")} </p>
-        <img className="rebindIcon" src="assets/listen.png" onClick={this.playSample}/>
-      </div>
-    )
-  }
-});
-//
-
 
 // App React class.  Contains a number of methods which control the audio, as well as rendering pretty much the whole damn app.
 var App = React.createClass({
@@ -147,17 +25,24 @@ var App = React.createClass({
         soundList: result,
         bindings: qwertyMap.map(function(key) {
           return key !== 0
-            ? {key: key, path: testData[key], loop: false, playing: false}
+            ? {key: key, path: defaultData[key], loop: false, playing: false}
             : 0;
         })
       });
     }.bind(this));
+    //OSX and MAC reserve functionality of either the alt or ctrl key, this checks the OS
+    // and sets the rebind-key trigger to be that specific keypress
+    navigator.appVersion.includes("Windows")
+      ? this.setState({bindTrigger: "altKey"})
+      : this.setState({bindTrigger: "ctrlKey"});
 
+      //one event listener for all keypresses.
     window.addEventListener('keypress', this.handleKeyPress);
   },
 
+//I'm not sure why this is important but online resources say put it in and it doesn't break anything.
   componentWillUnmount: function() {
-    this.serverRequest.abort();//not sure what this is for but online said to put it in.
+    this.serverRequest.abort();
   },
 
 
@@ -170,8 +55,11 @@ var App = React.createClass({
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
 
-    //handles the ctrl+key menu drop.
-    if (event.ctrlKey && $('#keyboardWindow').is(':visible')) {
+    // handles the ctrl+key menu drop.
+    // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
+    // held down or not. Now this.state.bindTrigger is declared upon component mount to
+    // be ctrlKey for mac OSX and altKey for windows.
+    if (event[this.state.bindTrigger] && $('#keyboardWindow').is(':visible')) {
       if (keyNumber < 123 && keyNumber > 96) {
         this.setState({changeKey: key})
         this.handleCtrlKey();
@@ -233,6 +121,7 @@ var App = React.createClass({
   render: function() {
    return (
      <div id="appWindow">
+      <h3>Shift-press to loop. Ctrl-Press to rebind</h3>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
@@ -257,6 +146,9 @@ var App = React.createClass({
  }
 })
 
+//This simulates a loading page. In all of our tests the server loaded the sound
+//files instantly but by the time we noticed this we already had an awesome
+//loading page up and running. This timeout feature honors that hard work
 setTimeout(function() {
   document.getElementById('secretSound').pause();
   ReactDOM.render(<div>
