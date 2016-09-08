@@ -121,13 +121,14 @@ var App = React.createClass({
   render: function render() {
     var _this = this;
 
+    var keyboardBreak = React.createElement("tr", null);
     return React.createElement(
       "div",
       { id: "appWindow" },
       React.createElement(
         "h3",
         null,
-        "Shift-press to loop. Ctrl-Press to rebind"
+        "Shift-press to loop. Ctrl-Press to rebind any key"
       ),
       React.createElement(
         "div",
@@ -152,16 +153,24 @@ var App = React.createClass({
       React.createElement(
         "div",
         { id: "keyboardWindow", className: "keyboard" },
-        this.state.bindings.map(function (keyBinding, idx) {
-          return (//yay es6
-            keyBinding === 0 ? React.createElement("br", { key: idx }) : React.createElement(VKey, { key: idx, keyId: keyBinding.key, path: keyBinding.path })
-          );
-        })
+        React.createElement(
+          "table",
+          null,
+          React.createElement(
+            "tr",
+            null,
+            this.state.bindings.map(function (keyBinding, idx) {
+              return (//yay es6
+                keyBinding === 0 ? keyboardBreak : React.createElement(VKey, { key: idx, keyId: keyBinding.key, path: keyBinding.path })
+              );
+            })
+          )
+        )
       )
     );
   }
 });
-
+// <br key={idx}/>
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
 //loading page up and running. This timeout feature honors that hard work
