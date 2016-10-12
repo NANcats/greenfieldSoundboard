@@ -4,14 +4,38 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/style.css">
     <title>Soundboard App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet" type="text/css">
   </head>
   <body>
+    <header class="header">SOUNDBOARD</header>
     <div id="app"></div>
     <script type="text/babel"></script>
     <script src="../node_modules/react/dist/react.js"></script>
     <script src="../node_modules/react-dom/dist/react-dom.js"></script>
-    <script src="../compiled/public/components/keycode.js"></script>
-    <script src="../compiled/public/components/client.js"></script>
-    <script src="../compiled/public/components/app.js"></script>
+    <script src="../compiled/components/rebindNode.js"></script>
+    <script src="../compiled/components/vKey.js"></script>
+    <script src="../compiled/components/helpers.js"></script>
+    <script src="../compiled/components/client.js"></script>
+    <script src="../compiled/components/app.js"></script>
+    <!-- <script src="../dist/bundle.js" type="text/javascript"></script> -->
+
+    <div class="creators">
+      <h3>Created by NaNcats</h3>
+      <div class="person">
+        <a href="https://github.com/ProductivePerson" target="_blank"><p class="name">Tim Clark</p></a>
+        <a href="https://github.com/ProductivePerson" target="_blank"><img class="img tim" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjzEDxgtdfbF8Ay6aT79EFHpgIOa4gsTBrbcnzwKYiZQXI0POZ" onmouseenter='this.src="https://avatars0.githubusercontent.com/u/16212630?v=3&s=460"' onmouseleave='this.src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjzEDxgtdfbF8Ay6aT79EFHpgIOa4gsTBrbcnzwKYiZQXI0POZ"'></a>
+      </div><div class="person">
+        <a href="https://github.com/ian-culleton" target="_blank"><p class="name">Ian Culleton</p></a>
+        <a href="https://github.com/ian-culleton" target="_blank"><img class="img ian" src="http://www.iizcat.com/uploads/2015/05/zw3vt-sk2.JPG" onmouseover='this.src="https://avatars1.githubusercontent.com/u/18315897?v=3&s=460"' onmouseleave='this.src="http://www.iizcat.com/uploads/2015/05/zw3vt-sk2.JPG"'></a>
+      </div><div class="person">
+        <a href="https://github.com/Jearxj" target="_blank"><p class="name">Jear Jujaroen</p></a>
+        <a href="https://github.com/Jearxj" target="_blank"><img class="img jear" src="http://eskipaper.com/images600_/cute-cats-68.jpg" onmouseover='this.src="https://avatars3.githubusercontent.com/u/6855463?v=3&s=460"' onmouseleave='this.src="http://eskipaper.com/images600_/cute-cats-68.jpg"'></a>
+      </div><div class="person">
+        <a href="https://github.com/logosghost" target="_blank"><p class="name jim">James Kim</p></a>
+        <a href="https://github.com/logosghost" target="_blank"><img class="img" src="https://i.ytimg.com/vi/5hSZNHwvLVY/hqdefault.jpg" onmouseenter='this.src="https://avatars0.githubusercontent.com/u/17522384?v=3&s=460"' onmouseleave='this.src="https://i.ytimg.com/vi/5hSZNHwvLVY/hqdefault.jpg"'></a>
+      </div>
+    </div>
+    <audio id="secretSound" src="soundfiles/nyan-cat.wav" preload="auto" autoPlay></audio>
   </body>
 </html>
