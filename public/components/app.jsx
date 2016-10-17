@@ -121,6 +121,7 @@ var App = React.createClass({
   render: function() {
    return (
      <div id="appWindow">
+      <h1 id="control">To edit your keys press, ctrl + key</h1>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
@@ -132,18 +133,18 @@ var App = React.createClass({
            </ul>
        </div>
        <div id='keyboardWindow' className="keyboard">
-       {
-         this.state.bindings.map( (keyBinding, idx) => //yay es6
-           keyBinding === 0
-            ? <br key={idx}/>
-            : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
-         )
-       }
+         {
+           this.state.bindings.map( (keyBinding, idx) => //yay es6
+             keyBinding === 0
+              ? <br key={idx}></br>
+              : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
+           )
+         }
        </div>
      </div>
-   )
+   );
  }
-})
+});
 
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome

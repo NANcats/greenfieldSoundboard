@@ -15,7 +15,7 @@ var Layout = function (_React$Component) {
   function Layout() {
     _classCallCheck(this, Layout);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Layout).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).apply(this, arguments));
   }
 
   _createClass(Layout, [{

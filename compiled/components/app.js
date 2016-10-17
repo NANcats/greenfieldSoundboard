@@ -125,6 +125,11 @@ var App = React.createClass({
       "div",
       { id: "appWindow" },
       React.createElement(
+        "h1",
+        { id: "control" },
+        "To edit your keys press, ctrl + key"
+      ),
+      React.createElement(
         "div",
         { id: "bindingWindow" },
         React.createElement(
