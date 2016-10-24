@@ -126,8 +126,8 @@ var App = React.createClass({
       "div",
       { id: "appWindow" },
       React.createElement(
-        "h3",
-        null,
+        "h1",
+        { id: "control" },
         "Shift-press to loop. Ctrl-Press to rebind any key"
       ),
       React.createElement(
@@ -170,7 +170,6 @@ var App = React.createClass({
     );
   }
 });
-// <br key={idx}/>
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
 //loading page up and running. This timeout feature honors that hard work

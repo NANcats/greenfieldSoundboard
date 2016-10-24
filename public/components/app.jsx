@@ -122,7 +122,7 @@ var App = React.createClass({
   const keyboardBreak = <tr></tr>;
    return (
      <div id="appWindow">
-      <h3>Shift-press to loop. Ctrl-Press to rebind any key</h3>
+      <h1 id="control">Shift-press to loop. Ctrl-Press to rebind any key</h1>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
@@ -150,7 +150,6 @@ var App = React.createClass({
    );
  }
 });
-// <br key={idx}/>
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
 //loading page up and running. This timeout feature honors that hard work

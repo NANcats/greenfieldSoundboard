@@ -28,7 +28,6 @@ var VKey = React.createClass({
         this.props.path.substr(12).slice(0, -4).split("-").join(" ")
       ),
       React.createElement('audio', { id: this.props.keyId, src: this.props.path, onEnded: this.handleAudioEnd, preload: 'auto' })
-    ) //
-    ;
+    );
   }
 });
